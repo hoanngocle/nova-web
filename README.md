@@ -6,7 +6,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `npm start`
+### Phase 1
+
+1. Build code from template React App
+2. Setting layout authen page
+3. Setting layout home page
+4. Setting layout side bar
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
