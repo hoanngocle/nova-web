@@ -27,9 +27,9 @@ const DefaultRoute = "/home";
 
 const Home = lazy(() => import("../../views/Home"));
 const SecondPage = lazy(() => import("../../views/SecondPage"));
-const Login = lazy(() => import("../../views/Login"));
-const Register = lazy(() => import("../../views/Register"));
-const ForgotPassword = lazy(() => import("../../views/ForgotPassword"));
+const Login = lazy(() => import("../../pages/Authentication/Login"));
+const Register = lazy(() => import("../../pages/Authentication/Register"));
+const ForgotPassword = lazy(() => import("../../pages/Authentication/ForgotPassword"));
 const Error = lazy(() => import("../../views/Error"));
 
 // ** Merge Routes
