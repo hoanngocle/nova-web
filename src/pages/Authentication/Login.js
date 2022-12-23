@@ -27,6 +27,7 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     return (
         <div className='auth-wrapper auth-cover'>
@@ -109,7 +110,11 @@ const Login = () => {
                                         <small>Forgot Password?</small>
                                     </Link>
                                 </div>
-                                <InputPasswordToggle className='input-group-merge' id='login-password' />
+                                <InputPasswordToggle
+                                    className='input-group-merge'
+                                    id='login-password'
+                                    value={"password"}
+                                />
                             </div>
                             <div className='form-check mb-1'>
                                 <Input type='checkbox' id='remember-me' />
