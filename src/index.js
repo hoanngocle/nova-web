@@ -49,19 +49,19 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <BrowserRouter>
-    <Provider store={store}>
-      <Suspense fallback={<Spinner />}>
-        <ThemeContext>
-          <LazyApp />
-          <Toaster
-            position={themeConfig.layout.toastPosition}
-            toastOptions={{ className: "react-hot-toast" }}
-          />
-        </ThemeContext>
-      </Suspense>
-    </Provider>
-  </BrowserRouter>
+    <BrowserRouter>
+        <Provider store={store}>
+            <Suspense fallback={<Spinner />}>
+                <ThemeContext>
+                    <LazyApp />
+                    <Toaster
+                        position={themeConfig.layout.toastPosition}
+                        toastOptions={{ className: "react-hot-toast" }}
+                    />
+                </ThemeContext>
+            </Suspense>
+        </Provider>
+    </BrowserRouter>
 );
 
 // If you want your app to work offline and load faster, you can change
