@@ -1,19 +1,19 @@
-import { lazy } from 'react';
-import { Navigate, useRoutes } from 'react-router-dom';
+import { lazy } from "react";
+import { Navigate, useRoutes } from "react-router-dom";
 
 const Router = () => {
     const routes = useRoutes([
         {
-            path: '/',
+            path: "/",
             index: true,
-            element: <Navigate replace to={'/'} />,
+            element: <Navigate replace to={"/"} />,
         },
         {
-            path: '/login',
+            path: "/login",
             element: <BlankLayout />,
             children: [
                 {
-                    path: '/login',
+                    path: "/login",
                     element: <Login />,
                 },
             ],

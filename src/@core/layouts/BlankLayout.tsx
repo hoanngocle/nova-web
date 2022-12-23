@@ -1,9 +1,9 @@
 // ** React Imports
-import { Outlet } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // ** Third Party Components
-import classnames from 'classnames';
+import classnames from "classnames";
 
 const BlankLayout = () => {
     // ** States
@@ -20,8 +20,8 @@ const BlankLayout = () => {
 
     return (
         <div
-            className={classnames('blank-page', {
-                'dark-layout': skin === 'dark',
+            className={classnames("blank-page", {
+                "dark-layout": skin === "dark",
             })}
         >
             <div className='app-content content'>

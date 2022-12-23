@@ -8,9 +8,9 @@ import { AbilityContext } from "@src/utility/context/Can";
  * @param {Object} item nav menu item
  */
 export const resolveVerticalNavMenuItemComponent = (item) => {
-  if (item.header) return "VerticalNavMenuSectionHeader";
-  if (item.children) return "VerticalNavMenuGroup";
-  return "VerticalNavMenuLink";
+    if (item.header) return "VerticalNavMenuSectionHeader";
+    if (item.children) return "VerticalNavMenuGroup";
+    return "VerticalNavMenuLink";
 };
 
 /**
@@ -18,8 +18,8 @@ export const resolveVerticalNavMenuItemComponent = (item) => {
  * @param {Object} item nav menu item
  */
 export const resolveHorizontalNavMenuItemComponent = (item) => {
-  if (item.children) return "HorizontalNavMenuGroup";
-  return "HorizontalNavMenuLink";
+    if (item.children) return "HorizontalNavMenuGroup";
+    return "HorizontalNavMenuLink";
 };
 
 /**
@@ -27,14 +27,11 @@ export const resolveHorizontalNavMenuItemComponent = (item) => {
  * @param {Object} link nav-link object
  */
 export const isNavLinkActive = (link, currentURL, routerProps) => {
-  return (
-    currentURL === link ||
-    (routerProps &&
-      routerProps.meta &&
-      routerProps.meta.navLink &&
-      routerProps.meta.navLink === link)
-  );
-  // return currentURL === link
+    return (
+        currentURL === link ||
+        (routerProps && routerProps.meta && routerProps.meta.navLink && routerProps.meta.navLink === link)
+    );
+    // return currentURL === link
 };
 
 /**
@@ -45,31 +42,31 @@ export const isNavLinkActive = (link, currentURL, routerProps) => {
  * @param activeItem
  */
 export const hasActiveChild = (item, currentUrl) => {
-  const { children } = item;
+    const { children } = item;
 
-  if (!children) {
+    if (!children) {
+        return false;
+    }
+
+    for (const child of children) {
+        if (child.children) {
+            if (hasActiveChild(child, currentUrl)) {
+                return true;
+            }
+        }
+
+        // Check if the child has a link and is active
+        if (
+            child &&
+            child.navLink &&
+            currentUrl &&
+            (child.navLink === currentUrl || currentUrl.includes(child.navLink))
+        ) {
+            return true;
+        }
+    }
+
     return false;
-  }
-
-  for (const child of children) {
-    if (child.children) {
-      if (hasActiveChild(child, currentUrl)) {
-        return true;
-      }
-    }
-
-    // Check if the child has a link and is active
-    if (
-      child &&
-      child.navLink &&
-      currentUrl &&
-      (child.navLink === currentUrl || currentUrl.includes(child.navLink))
-    ) {
-      return true;
-    }
-  }
-
-  return false;
 };
 
 /**
@@ -81,41 +78,39 @@ export const hasActiveChild = (item, currentUrl) => {
  * @param currentActiveGroup
  */
 export const removeChildren = (children, openGroup, currentActiveGroup) => {
-  children.forEach((child) => {
-    if (!currentActiveGroup.includes(child.id)) {
-      const index = openGroup.indexOf(child.id);
-      if (index > -1) openGroup.splice(index, 1);
-      if (child.children)
-        removeChildren(child.children, openGroup, currentActiveGroup);
-    }
-  });
+    children.forEach((child) => {
+        if (!currentActiveGroup.includes(child.id)) {
+            const index = openGroup.indexOf(child.id);
+            if (index > -1) openGroup.splice(index, 1);
+            if (child.children) removeChildren(child.children, openGroup, currentActiveGroup);
+        }
+    });
 };
 
 const checkForVisibleChild = (arr, ability) => {
-  return arr.some((i) => {
-    if (i.children) {
-      return checkForVisibleChild(i.children, ability);
-    } else {
-      return ability.can(i.action, i.resource);
-    }
-  });
+    return arr.some((i) => {
+        if (i.children) {
+            return checkForVisibleChild(i.children, ability);
+        } else {
+            return ability.can(i.action, i.resource);
+        }
+    });
 };
 
 export const canViewMenuGroup = (item) => {
-  const ability = useContext(AbilityContext);
-  // ! This same logic is used in canViewHorizontalNavMenuGroup and canViewHorizontalNavMenuHeaderGroup. So make sure to update logic in them as well
-  const hasAnyVisibleChild =
-    item.children && checkForVisibleChild(item.children, ability);
+    const ability = useContext(AbilityContext);
+    // ! This same logic is used in canViewHorizontalNavMenuGroup and canViewHorizontalNavMenuHeaderGroup. So make sure to update logic in them as well
+    const hasAnyVisibleChild = item.children && checkForVisibleChild(item.children, ability);
 
-  // ** If resource and action is defined in item => Return based on children visibility (Hide group if no child is visible)
-  // ** Else check for ability using provided resource and action along with checking if has any visible child
-  if (!(item.action && item.resource)) {
-    return hasAnyVisibleChild;
-  }
-  return ability.can(item.action, item.resource) && hasAnyVisibleChild;
+    // ** If resource and action is defined in item => Return based on children visibility (Hide group if no child is visible)
+    // ** Else check for ability using provided resource and action along with checking if has any visible child
+    if (!(item.action && item.resource)) {
+        return hasAnyVisibleChild;
+    }
+    return ability.can(item.action, item.resource) && hasAnyVisibleChild;
 };
 
 export const canViewMenuItem = (item) => {
-  const ability = useContext(AbilityContext);
-  return ability.can(item.action, item.resource);
+    const ability = useContext(AbilityContext);
+    return ability.can(item.action, item.resource);
 };

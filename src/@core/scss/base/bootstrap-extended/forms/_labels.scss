@@ -7,6 +7,6 @@
 .col-form-label,
 .col-form-label-lg,
 .col-form-label-sm {
-  @include font-size($form-label-font-size); // Override the `<legend>` default
-  align-self: center;
+    @include font-size($form-label-font-size); // Override the `<legend>` default
+    align-self: center;
 }

@@ -14,9 +14,9 @@ import PublicRoute from "@components/routes/PublicRoute";
 import { isObjEmpty } from "@utils";
 
 const getLayout = {
-  blank: <BlankLayout />,
-  vertical: <VerticalLayout />,
-  horizontal: <HorizontalLayout />,
+    blank: <BlankLayout />,
+    vertical: <VerticalLayout />,
+    horizontal: <HorizontalLayout />,
 };
 
 // ** Document title
@@ -34,118 +34,117 @@ const Error = lazy(() => import("../../views/Error"));
 
 // ** Merge Routes
 const Routes = [
-  {
-    path: "/",
-    index: true,
-    element: <Navigate replace to={DefaultRoute} />,
-  },
-  {
-    path: "/home",
-    element: <Home />,
-  },
-  {
-    path: "/second-page",
-    element: <SecondPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-    meta: {
-      layout: "blank",
+    {
+        path: "/",
+        index: true,
+        element: <Navigate replace to={DefaultRoute} />,
     },
-  },
-  {
-    path: "/register",
-    element: <Register />,
-    meta: {
-      layout: "blank",
+    {
+        path: "/home",
+        element: <Home />,
     },
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-    meta: {
-      layout: "blank",
+    {
+        path: "/second-page",
+        element: <SecondPage />,
     },
-  },
-  {
-    path: "/error",
-    element: <Error />,
-    meta: {
-      layout: "blank",
+    {
+        path: "/login",
+        element: <Login />,
+        meta: {
+            layout: "blank",
+        },
     },
-  },
+    {
+        path: "/register",
+        element: <Register />,
+        meta: {
+            layout: "blank",
+        },
+    },
+    {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+        meta: {
+            layout: "blank",
+        },
+    },
+    {
+        path: "/error",
+        element: <Error />,
+        meta: {
+            layout: "blank",
+        },
+    },
 ];
 
 const getRouteMeta = (route) => {
-  if (isObjEmpty(route.element.props)) {
-    if (route.meta) {
-      return { routeMeta: route.meta };
-    } else {
-      return {};
+    if (isObjEmpty(route.element.props)) {
+        if (route.meta) {
+            return { routeMeta: route.meta };
+        } else {
+            return {};
+        }
     }
-  }
 };
 
 // ** Return Filtered Array of Routes & Paths
 const MergeLayoutRoutes = (layout, defaultLayout) => {
-  const LayoutRoutes = [];
+    const LayoutRoutes = [];
 
-  if (Routes) {
-    Routes.filter((route) => {
-      let isBlank = false;
-      // ** Checks if Route layout or Default layout matches current layout
-      if (
-        (route.meta && route.meta.layout && route.meta.layout === layout) ||
-        ((route.meta === undefined || route.meta.layout === undefined) &&
-          defaultLayout === layout)
-      ) {
-        const RouteTag = PublicRoute;
+    if (Routes) {
+        Routes.filter((route) => {
+            let isBlank = false;
+            // ** Checks if Route layout or Default layout matches current layout
+            if (
+                (route.meta && route.meta.layout && route.meta.layout === layout) ||
+                ((route.meta === undefined || route.meta.layout === undefined) && defaultLayout === layout)
+            ) {
+                const RouteTag = PublicRoute;
 
-        // ** Check for public or private route
-        if (route.meta) {
-          route.meta.layout === "blank" ? (isBlank = true) : (isBlank = false);
-        }
-        if (route.element) {
-          const Wrapper =
-            // eslint-disable-next-line multiline-ternary
-            isObjEmpty(route.element.props) && isBlank === false
-              ? // eslint-disable-next-line multiline-ternary
-                LayoutWrapper
-              : Fragment;
+                // ** Check for public or private route
+                if (route.meta) {
+                    route.meta.layout === "blank" ? (isBlank = true) : (isBlank = false);
+                }
+                if (route.element) {
+                    const Wrapper =
+                        // eslint-disable-next-line multiline-ternary
+                        isObjEmpty(route.element.props) && isBlank === false
+                            ? // eslint-disable-next-line multiline-ternary
+                              LayoutWrapper
+                            : Fragment;
 
-          route.element = (
-            <Wrapper {...(isBlank === false ? getRouteMeta(route) : {})}>
-              <RouteTag route={route}>{route.element}</RouteTag>
-            </Wrapper>
-          );
-        }
+                    route.element = (
+                        <Wrapper {...(isBlank === false ? getRouteMeta(route) : {})}>
+                            <RouteTag route={route}>{route.element}</RouteTag>
+                        </Wrapper>
+                    );
+                }
 
-        // Push route to LayoutRoutes
-        LayoutRoutes.push(route);
-      }
-      return LayoutRoutes;
-    });
-  }
-  return LayoutRoutes;
+                // Push route to LayoutRoutes
+                LayoutRoutes.push(route);
+            }
+            return LayoutRoutes;
+        });
+    }
+    return LayoutRoutes;
 };
 
 const getRoutes = (layout) => {
-  const defaultLayout = layout || "vertical";
-  const layouts = ["vertical", "horizontal", "blank"];
+    const defaultLayout = layout || "vertical";
+    const layouts = ["vertical", "horizontal", "blank"];
 
-  const AllRoutes = [];
+    const AllRoutes = [];
 
-  layouts.forEach((layoutItem) => {
-    const LayoutRoutes = MergeLayoutRoutes(layoutItem, defaultLayout);
+    layouts.forEach((layoutItem) => {
+        const LayoutRoutes = MergeLayoutRoutes(layoutItem, defaultLayout);
 
-    AllRoutes.push({
-      path: "/",
-      element: getLayout[layoutItem] || getLayout[defaultLayout],
-      children: LayoutRoutes,
+        AllRoutes.push({
+            path: "/",
+            element: getLayout[layoutItem] || getLayout[defaultLayout],
+            children: LayoutRoutes,
+        });
     });
-  });
-  return AllRoutes;
+    return AllRoutes;
 };
 
 export { DefaultRoute, TemplateTitle, Routes, getRoutes };
