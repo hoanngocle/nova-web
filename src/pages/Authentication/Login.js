@@ -17,27 +17,53 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Login = () => {
     const { skin } = useSkin();
 
     const source = skin === "dark" ? illustrationsDark : illustrationsLight;
 
+    const userRef = useRef();
+    const errorRef = useRef();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        userRef.current.focus();
+    }, []);
+
+    useEffect(() => {
+        setErrorMsg("");
+    }, [email, password]);
 
     return (
         <div className='auth-wrapper auth-cover'>
             <Row className='auth-inner m-0'>
-                <Link className='brand-logo' to='/' onClick={(e) => e.preventDefault()}>
-                    <svg viewBox='0 0 139 95' version='1.1' height='28'>
+                <Link
+                    className='brand-logo'
+                    to='/'
+                    onClick={(e) => e.preventDefault()}>
+                    <svg
+                        viewBox='0 0 139 95'
+                        version='1.1'
+                        height='28'>
                         <defs>
-                            <linearGradient x1='100%' y1='10.5120544%' x2='50%' y2='89.4879456%' id='linearGradient-1'>
-                                <stop stopColor='#000000' offset='0%'></stop>
-                                <stop stopColor='#FFFFFF' offset='100%'></stop>
+                            <linearGradient
+                                x1='100%'
+                                y1='10.5120544%'
+                                x2='50%'
+                                y2='89.4879456%'
+                                id='linearGradient-1'>
+                                <stop
+                                    stopColor='#000000'
+                                    offset='0%'></stop>
+                                <stop
+                                    stopColor='#FFFFFF'
+                                    offset='100%'></stop>
                             </linearGradient>
                             <linearGradient
                                 x1='64.0437835%'
@@ -45,13 +71,27 @@ const Login = () => {
                                 x2='37.373316%'
                                 y2='100%'
                                 id='linearGradient-2'>
-                                <stop stopColor='#EEEEEE' stopOpacity='0' offset='0%'></stop>
-                                <stop stopColor='#FFFFFF' offset='100%'></stop>
+                                <stop
+                                    stopColor='#EEEEEE'
+                                    stopOpacity='0'
+                                    offset='0%'></stop>
+                                <stop
+                                    stopColor='#FFFFFF'
+                                    offset='100%'></stop>
                             </linearGradient>
                         </defs>
-                        <g id='Page-1' stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
-                            <g id='Artboard' transform='translate(-400.000000, -178.000000)'>
-                                <g id='Group' transform='translate(400.000000, 178.000000)'>
+                        <g
+                            id='Page-1'
+                            stroke='none'
+                            strokeWidth='1'
+                            fill='none'
+                            fillRule='evenodd'>
+                            <g
+                                id='Artboard'
+                                transform='translate(-400.000000, -178.000000)'>
+                                <g
+                                    id='Group'
+                                    transform='translate(400.000000, 178.000000)'>
                                     <path
                                         d='M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z'
                                         id='Path'
@@ -83,27 +123,59 @@ const Login = () => {
                     </svg>
                     <h2 className='brand-text text-primary ms-1'>Nova Online</h2>
                 </Link>
-                <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
+                <Col
+                    className='d-none d-lg-flex align-items-center p-5'
+                    lg='8'
+                    sm='12'>
                     <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
-                        <img className='img-fluid' src={source} alt='Login Cover' />
+                        <img
+                            className='img-fluid'
+                            src={source}
+                            alt='Login Cover'
+                        />
                     </div>
                 </Col>
-                <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
-                    <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
-                        <CardTitle tag='h2' className='fw-bold mb-1'>
+                <Col
+                    className='d-flex align-items-center auth-bg px-2 p-lg-5'
+                    lg='4'
+                    sm='12'>
+                    <Col
+                        className='px-xl-2 mx-auto'
+                        sm='8'
+                        md='6'
+                        lg='12'>
+                        <CardTitle
+                            tag='h2'
+                            className='fw-bold mb-1'>
                             Welcome to Nova! 👋
                         </CardTitle>
                         <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
-                        <Form className='auth-login-form mt-2' onSubmit={(e) => e.preventDefault()}>
+                        <Form
+                            className='auth-login-form mt-2'
+                            onSubmit={(e) => e.preventDefault()}>
                             <div className='mb-1'>
-                                <Label className='form-label' for='login-email'>
+                                <Label
+                                    className='form-label'
+                                    for='email'>
                                     Email
                                 </Label>
-                                <Input type='email' id='login-email' placeholder='nova@example.com' autoFocus />
+                                <Input
+                                    type='email'
+                                    id='email'
+                                    ref={userRef}
+                                    autoComplete='off'
+                                    placeholder='nova@example.com'
+                                    autoFocus
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={email}
+                                    required
+                                />
                             </div>
                             <div className='mb-1'>
                                 <div className='d-flex justify-content-between'>
-                                    <Label className='form-label' for='login-password'>
+                                    <Label
+                                        className='form-label'
+                                        for='password'>
                                         Password
                                     </Label>
                                     <Link to='/forgot-password'>
@@ -112,17 +184,26 @@ const Login = () => {
                                 </div>
                                 <InputPasswordToggle
                                     className='input-group-merge'
-                                    id='login-password'
+                                    id='password'
                                     value={"password"}
                                 />
                             </div>
                             <div className='form-check mb-1'>
-                                <Input type='checkbox' id='remember-me' />
-                                <Label className='form-check-label' for='remember-me'>
+                                <Input
+                                    type='checkbox'
+                                    id='remember-me'
+                                />
+                                <Label
+                                    className='form-check-label'
+                                    for='remember-me'>
                                     Remember Me
                                 </Label>
                             </div>
-                            <Button tag={Link} to='/' color='primary' block>
+                            <Button
+                                tag={Link}
+                                to='/'
+                                color='primary'
+                                block>
                                 Sign in
                             </Button>
                         </Form>
@@ -145,7 +226,9 @@ const Login = () => {
                             <Button color='google'>
                                 <Mail size={14} />
                             </Button>
-                            <Button className='me-0' color='github'>
+                            <Button
+                                className='me-0'
+                                color='github'>
                                 <GitHub size={14} />
                             </Button>
                         </div>
