@@ -132,38 +132,38 @@ const UserDropdown = (props: Props) => {
           </Box>
         </Box>
         <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} />
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/user-profile/profile')}>
+        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <Icon icon='tabler:user-check' />
             My Profile
           </Box>
         </MenuItemStyled>
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/email')}>
+        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <Icon icon='tabler:mail' />
             Inbox
           </Box>
         </MenuItemStyled>
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/apps/chat')}>
+        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <Icon icon='tabler:message-2' />
             Chat
           </Box>
         </MenuItemStyled>
         <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} />
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/account-settings/account')}>
+        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <Icon icon='tabler:settings' />
             Settings
           </Box>
         </MenuItemStyled>
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/pricing')}>
+        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <Icon icon='tabler:currency-dollar' />
             Pricing
           </Box>
         </MenuItemStyled>
-        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose('/pages/faq')}>
+        <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <Icon icon='tabler:help' />
             FAQ
