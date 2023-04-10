@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'src/redux/store';
-import { Roles } from 'types';
+import { Roles } from 'src/types';
 import { getUserData } from 'src/api/auth';
 
 export type AuthState = {
@@ -57,8 +57,6 @@ export const authSlice = createSlice({
             state.email = email;
             state.name = name;
             state.id = id;
-            state.place_id = place_id;
-            state.place_code = place_code;
 
             if (role) {
                 state.role = role;
@@ -73,8 +71,6 @@ export const authSlice = createSlice({
             state.name = '';
             state.id = '';
             state.token = '';
-            state.place_id = '';
-            state.place_code = '';
             state.role = [];
         }
     },
