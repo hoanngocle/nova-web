@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'src/redux/store';
-import { Roles } from 'src/types';
 import { getUserData } from 'src/api/auth';
-import { ACCOUNT_ACTIVE, ADMIN, ROLE_CLIENT } from 'src/configs/constant';
+import { ACCOUNT_ACTIVE, ROLE_CLIENT } from 'src/configs/constant';
 
 export type AuthState = {
     token: string;
@@ -13,7 +12,7 @@ export type AuthState = {
         avatar: string;
         dob: string;
         address: string;
-        role: Roles[];
+        role: number | string;
         status: number;
         created_at: string;
     };
@@ -56,7 +55,7 @@ export const authSlice = createSlice({
             avatar: '',
             dob: '',
             address: '',
-            role: [],
+            role: ROLE_CLIENT,
             status: ACCOUNT_ACTIVE,
             created_at: ''
         },
@@ -74,7 +73,7 @@ export const authSlice = createSlice({
         logout: (state: AuthState) => {
             state.token = '';
             state.user.email = '';
-            state.user.role = [];
+            state.user.role = '';
         },
 
         setProfile: (state: AuthState, action) => {
