@@ -1,38 +1,51 @@
 // ** React Imports
-import { ReactNode, ReactElement, useEffect } from 'react'
+import { ReactNode, ReactElement, useEffect } from 'react';
 
 // ** Next Import
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 // ** Hooks Import
-import { useAuth } from 'src/hooks/useAuth'
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { fetchUserData, selectAuth } from 'src/redux/slice/authSlice';
 
 interface GuestGuardProps {
-  children: ReactNode
-  fallback: ReactElement | null
+    children: ReactNode;
+    fallback: ReactElement | null;
 }
 
 const GuestGuard = (props: GuestGuardProps) => {
-  const { children, fallback } = props
-  const auth = useAuth()
-  const router = useRouter()
+    const { children, fallback } = props;
+    const router = useRouter();
+    const { token, loading } = useAppSelector(selectAuth);
+    const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!router.isReady) {
-      return
+    console.log('Guest Guard');
+
+    useEffect(() => {
+        if (!router.isReady) {
+            return;
+        }
+
+        if (token) {
+            dispatch(fetchUserData());
+
+            router.replace('/');
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, token, router.route]);
+
+    // useEffect(() => {
+    //     if (!token) {
+    //         navigate('/login', { state: { from: location }, replace: true });
+    //     }
+    // }, [token, location, navigate]);
+
+    if (loading || (!loading && token == null)) {
+        return fallback;
     }
 
-    if (window.localStorage.getItem('userData')) {
-      router.replace('/')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.route])
+    return <>{children}</>;
+};
 
-  if (auth.loading || (!auth.loading && auth.user !== null)) {
-    return fallback
-  }
-
-  return <>{children}</>
-}
-
-export default GuestGuard
+export default GuestGuard;

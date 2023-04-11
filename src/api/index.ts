@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
-import { store } from 'redux/store';
-import { isDevMode } from 'lib/utils';
+import { store } from 'src/redux/store';
+import { isDevMode } from 'src/lib/utils';
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 type Error = {
     data: any;
@@ -15,7 +16,7 @@ type Error = {
  **/
 export const getAxiosClient = () => {
     return axios.create({
-        baseURL: BASE_URL
+        baseURL: API_URL
     });
 };
 
@@ -25,6 +26,7 @@ export const getAxiosClient = () => {
 export const getAxiosClientWithToken = () => {
     const client = getAxiosClient();
     client.defaults.headers.common['Authorization'] = 'Bearer ' + store.getState().auth.token;
+    client.defaults.headers.common['Api-Authorization'] = API_KEY;
     client.defaults.headers.common['Content-Type'] = 'application/json';
     client.defaults.headers.common['Accept'] = 'application/json';
 

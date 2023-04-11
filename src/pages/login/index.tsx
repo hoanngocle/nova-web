@@ -1,51 +1,49 @@
 // ** React Imports
-import { useState, ReactNode, MouseEvent } from 'react';
+import { MouseEvent, ReactNode, useState } from 'react';
 
 // ** Next Imports
 import Link from 'next/link';
 
 // ** MUI Components
 import Alert from '@mui/material/Alert';
+import Box, { BoxProps } from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
-import IconButton from '@mui/material/IconButton';
-import Box, { BoxProps } from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled, useTheme } from '@mui/material/styles';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputAdornment from '@mui/material/InputAdornment';
-import MuiFormControlLabel, { FormControlLabelProps } from '@mui/material/FormControlLabel';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // ** Icon Imports
 import Icon from 'src/@core/components/icon';
 
 // ** Third Party Imports
-import * as yup from 'yup';
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
 // ** Hooks
-import { useAuth } from 'src/hooks/useAuth';
 import useBgColor from 'src/@core/hooks/useBgColor';
 import { useSettings } from 'src/@core/hooks/useSettings';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig';
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout';
-
-// ** Demo Imports
-import FooterIllustrationsV2 from 'src/views/pages/auth/FooterIllustrationsV2';
+import Footer from 'src/views/pages/auth/Footer';
 
 // ** Styled Components
-const LoginIllustration = styled('img')(({ theme }) => ({
+const Login = styled('img')(({ theme }) => ({
     zIndex: 2,
     maxHeight: 680,
     marginTop: theme.spacing(12),
@@ -90,21 +88,22 @@ const schema = yup.object().shape({
 });
 
 const defaultValues = {
-    password: 'admin',
-    email: 'admin@vuexy.com'
+    email: 'admin@nova.com',
+    password: 'admin'
 };
 
 interface FormData {
     email: string;
     password: string;
 }
+import { loginSelector, LoginValidate, asyncLogin, resetLoginState } from 'src/redux/slice/loginSlice';
 
 const LoginPage = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(true);
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     // ** Hooks
-    const auth = useAuth();
+    const dispatch = useAppDispatch();
     const theme = useTheme();
     const bgColors = useBgColor();
     const { settings } = useSettings();
@@ -115,7 +114,6 @@ const LoginPage = () => {
 
     const {
         control,
-        setError,
         handleSubmit,
         formState: { errors }
     } = useForm({
@@ -126,12 +124,8 @@ const LoginPage = () => {
 
     const onSubmit = (data: FormData) => {
         const { email, password } = data;
-        auth.login({ email, password, rememberMe }, () => {
-            setError('email', {
-                type: 'manual',
-                message: 'Email or Password is invalid'
-            });
-        });
+
+        dispatch(asyncLogin({ email, password }));
     };
 
     const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration';
@@ -151,11 +145,8 @@ const LoginPage = () => {
                         margin: theme => theme.spacing(8, 0, 8, 8)
                     }}
                 >
-                    <LoginIllustration
-                        alt='login-illustration'
-                        src={`/images/pages/${imageSource}-${theme.palette.mode}.png`}
-                    />
-                    <FooterIllustrationsV2 />
+                    <Login alt='login-illustration' src={`/images/pages/${imageSource}-${theme.palette.mode}.png`} />
+                    <Footer />
                 </Box>
             ) : null}
             <RightWrapper>
@@ -216,10 +207,10 @@ const LoginPage = () => {
                             sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}
                         >
                             <Typography variant='body2' sx={{ mb: 2, color: 'primary.main' }}>
-                                Admin: <strong>admin@vuexy.com</strong> / Pass: <strong>admin</strong>
+                                Admin: <strong>admin@nova.com</strong> / Pass: <strong>admin</strong>
                             </Typography>
                             <Typography variant='body2' sx={{ color: 'primary.main' }}>
-                                Client: <strong>client@vuexy.com</strong> / Pass: <strong>client</strong>
+                                Client: <strong>client@nova.com</strong> / Pass: <strong>client</strong>
                             </Typography>
                         </Alert>
                         <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
@@ -236,7 +227,7 @@ const LoginPage = () => {
                                             onBlur={onBlur}
                                             onChange={onChange}
                                             error={Boolean(errors.email)}
-                                            placeholder='admin@vuexy.com'
+                                            placeholder='admin@nova.com'
                                         />
                                     )}
                                 />

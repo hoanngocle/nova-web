@@ -1,9 +1,16 @@
+import { Roles } from 'src/types';
+
 /**
  *  Set Home URL based on User Roles
  */
-const getHomeRoute = (role: string) => {
-  if (role === 'client') return '/acl'
-  else return '/home'
-}
+const getHomeRoute = (role: Roles[]) => {
+    console.log(role);
 
-export default getHomeRoute
+    if (role === 'client') {
+        return '';
+    } else {
+        return 'admin/';
+    }
+};
+
+export default getHomeRoute;

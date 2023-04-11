@@ -2,13 +2,21 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'src/redux/store';
 import { Roles } from 'src/types';
 import { getUserData } from 'src/api/auth';
+import { ACCOUNT_ACTIVE, ADMIN, ROLE_CLIENT } from 'src/configs/constant';
 
 export type AuthState = {
-    email: string;
-    name: string;
-    id: string;
     token: string;
-    role: Roles[];
+    user: {
+        username: string;
+        email: string;
+        bio: string;
+        avatar: string;
+        dob: string;
+        address: string;
+        role: Roles[];
+        status: number;
+        created_at: string;
+    };
     loading: boolean;
     success: boolean;
     error: boolean;
@@ -20,7 +28,7 @@ export const fetchUserData = createAsyncThunk('users/fetchUserData', async (data
         const { data = {}, success = false } = response.data;
 
         if (success) {
-            dispatch(setAuth(data));
+            dispatch(setProfile(data));
 
             return true;
         }
@@ -40,38 +48,45 @@ export const fetchUserData = createAsyncThunk('users/fetchUserData', async (data
 export const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        email: '',
-        name: '',
-        id: '',
         token: '',
-        role: [],
-        place_id: '',
-        place_code: '',
+        user: {
+            username: '',
+            email: '',
+            bio: '',
+            avatar: '',
+            dob: '',
+            address: '',
+            role: [],
+            status: ACCOUNT_ACTIVE,
+            created_at: ''
+        },
         loading: false,
         success: false,
         error: false
     } as AuthState,
     reducers: {
         setAuth: (state: AuthState, action) => {
-            const { token, email, name, id, role, place_id, place_code } = action.payload;
-            state.email = email;
-            state.name = name;
-            state.id = id;
-
-            if (role) {
-                state.role = role;
-            }
-
+            const { token } = action.payload;
             if (token) {
                 state.token = token;
             }
         },
         logout: (state: AuthState) => {
-            state.email = '';
-            state.name = '';
-            state.id = '';
             state.token = '';
-            state.role = [];
+            state.user.email = '';
+            state.user.role = [];
+        },
+
+        setProfile: (state: AuthState, action) => {
+            const { username, email, bio, avatar, dob, role, status, created_at } = action.payload;
+            state.user.username = username;
+            state.user.email = email;
+            state.user.bio = bio;
+            state.user.avatar = avatar;
+            state.user.dob = dob;
+            state.user.status = status;
+            state.user.created_at = created_at;
+            state.user.role = role;
         }
     },
     extraReducers: builder => {
@@ -92,4 +107,4 @@ export const authSlice = createSlice({
 });
 
 export const selectAuth = (state: RootState) => state.auth;
-export const { setAuth, logout } = authSlice.actions;
+export const { setAuth, setProfile, logout } = authSlice.actions;
