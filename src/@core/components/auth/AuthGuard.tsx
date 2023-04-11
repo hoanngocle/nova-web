@@ -36,6 +36,8 @@ const AuthGuard = (props: AuthGuardProps) => {
         }
 
         if (token) {
+            console.log('first');
+
             dispatch(fetchUserData());
         }
     }, [dispatch, router, router.route, token]);

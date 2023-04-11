@@ -19,7 +19,7 @@ import Spinner from 'src/@core/components/spinner';
 import BlankLayout from 'src/@core/layouts/BlankLayout';
 
 // ** Hooks Import
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { useAppSelector } from 'src/redux/hooks';
 import { selectAuth } from 'src/redux/slice/authSlice';
 
 // ** Util Import
@@ -37,15 +37,20 @@ const AclGuard = (props: AclGuardProps) => {
     const { aclAbilities, children, guestGuard = false, authGuard = true } = props;
 
     // ** Hooks
-    const { token, user } = useAppSelector(selectAuth);
-    const dispatch = useAppDispatch();
+    const { user } = useAppSelector(selectAuth);
     const router = useRouter();
 
     // ** Vars
     let ability: AppAbility;
 
     useEffect(() => {
-        if (user && user.role && !guestGuard && router.route === '/') {
+        // console.log(user.email);
+        // console.log(ability);
+        // if (user.email) {
+        //     console.log('true email');
+        // }
+
+        if (user.email && user.role && !guestGuard && router.route === '/') {
             const homeRoute = getHomeRoute(user.role);
 
             router.replace(homeRoute);
@@ -53,7 +58,7 @@ const AclGuard = (props: AclGuardProps) => {
     }, [user, guestGuard, router]);
 
     // User is logged in, build ability for the user based on his role
-    if (user && !ability) {
+    if (user.email && user.role && !ability) {
         ability = buildAbilityFor(user.role, aclAbilities.subject);
         if (router.route === '/') {
             return <Spinner />;
@@ -63,7 +68,7 @@ const AclGuard = (props: AclGuardProps) => {
     // If guest guard or no guard is true or any error page
     if (guestGuard || router.route === '/404' || router.route === '/500' || !authGuard) {
         // If user is logged in and his ability is built
-        if (user && ability) {
+        if (user.email && ability) {
             return <AbilityContext.Provider value={ability}>{children}</AbilityContext.Provider>;
         } else {
             // If user is not logged in (render pages like login, register etc..)
@@ -72,7 +77,7 @@ const AclGuard = (props: AclGuardProps) => {
     }
 
     // Check the access of current user and render pages
-    if (ability && user && ability.can(aclAbilities.action, aclAbilities.subject)) {
+    if (ability && user.email && ability.can(aclAbilities.action, aclAbilities.subject)) {
         if (router.route === '/') {
             return <Spinner />;
         }

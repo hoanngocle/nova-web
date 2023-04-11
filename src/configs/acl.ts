@@ -1,15 +1,16 @@
-import { AbilityBuilder, Ability } from '@casl/ability'
+import { AbilityBuilder, createMongoAbility, PureAbility } from '@casl/ability';
+import { ROLE_CLIENT, ROLE_SUPER_ADMIN } from './constant';
 
-export type Subjects = string
-export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete'
+export type Subjects = string;
+export type Actions = 'manage' | 'create' | 'read' | 'update' | 'delete';
 
-export type AppAbility = Ability<[Actions, Subjects]> | undefined
+export type AppAbility = PureAbility<[Actions, Subjects]> | undefined;
 
-export const AppAbility = Ability as any
+export const AppAbility = PureAbility as any;
 export type ACLObj = {
-  action: Actions
-  subject: string
-}
+    action: Actions;
+    subject: string;
+};
 
 /**
  * Please define your own Ability rules according to your app requirements.
@@ -17,30 +18,28 @@ export type ACLObj = {
  * admin can manage everything and client can just visit ACL page
  */
 const defineRulesFor = (role: string, subject: string) => {
-  const { can, rules } = new AbilityBuilder(AppAbility)
+    const { can, rules } = new AbilityBuilder(createMongoAbility);
 
-  if (role === 'admin') {
-    can('manage', 'all')
-  } else if (role === 'client') {
-    can(['read'], 'acl-page')
-  } else {
-    can(['read', 'create', 'update', 'delete'], subject)
-  }
+    if (role === ROLE_SUPER_ADMIN) {
+        can('manage', 'all');
+    } else if (role === ROLE_CLIENT) {
+        can(['read'], 'acl-page');
+    } else {
+        can(['read', 'create', 'update', 'delete'], subject);
+    }
 
-  return rules
-}
+    return rules;
+};
 
 export const buildAbilityFor = (role: string, subject: string): AppAbility => {
-  return new AppAbility(defineRulesFor(role, subject), {
-    // https://casl.js.org/v5/en/guide/subject-type-detection
-    // @ts-ignore
-    detectSubjectType: object => object!.type
-  })
-}
+    return new AppAbility(defineRulesFor(role, subject), {
+        detectSubjectType: (object: any) => object!.type
+    });
+};
 
 export const defaultACLObj: ACLObj = {
-  action: 'manage',
-  subject: 'all'
-}
+    action: 'manage',
+    subject: 'all'
+};
 
-export default defineRulesFor
+export default defineRulesFor;

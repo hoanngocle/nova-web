@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'src/redux/store';
 import { getUserData } from 'src/api/auth';
-import { ACCOUNT_ACTIVE, ROLE_CLIENT } from 'src/configs/constant';
 
 export type AuthState = {
     token: string;
@@ -12,8 +11,8 @@ export type AuthState = {
         avatar: string;
         dob: string;
         address: string;
-        role: number | string;
-        status: number;
+        role: string;
+        status: string;
         created_at: string;
     };
     loading: boolean;
@@ -23,6 +22,7 @@ export type AuthState = {
 
 export const fetchUserData = createAsyncThunk('users/fetchUserData', async (data, { dispatch, rejectWithValue }) => {
     try {
+        console.log('12312312312');
         const response = await getUserData();
         const { data = {}, success = false } = response.data;
 
@@ -34,7 +34,16 @@ export const fetchUserData = createAsyncThunk('users/fetchUserData', async (data
 
         return rejectWithValue(false);
     } catch (error: any) {
+        console.log(error.request);
+        console.log(error.code === 'ERR_NETWORK');
+
+        // if(res.axiosFailsDueToNoInternetConnection){
+        //     alert('no internet connection');
+        //     dispatch({type: RELOAD});
+        // }
         const { status } = error.response || {};
+
+        console.log(status);
 
         if ([401, 404].includes(status)) {
             dispatch(logout());
@@ -55,8 +64,8 @@ export const authSlice = createSlice({
             avatar: '',
             dob: '',
             address: '',
-            role: ROLE_CLIENT,
-            status: ACCOUNT_ACTIVE,
+            role: '',
+            status: '',
             created_at: ''
         },
         loading: false,
