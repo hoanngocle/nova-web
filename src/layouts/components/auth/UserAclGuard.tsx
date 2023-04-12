@@ -1,7 +1,5 @@
-// ** React Imports
+// ** React + Next Imports
 import { ReactNode, useEffect } from 'react';
-
-// ** Next Import
 import { useRouter } from 'next/router';
 
 // ** ACL Imports
