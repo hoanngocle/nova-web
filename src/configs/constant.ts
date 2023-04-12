@@ -1,6 +1,6 @@
-export const ROLE_SUPER_ADMIN = '9';
-export const ROLE_ADMIN = '1';
-export const ROLE_CLIENT = '2';
+export const ROLE_SUPER_ADMIN = 9;
+export const ROLE_ADMIN = 1;
+export const ROLE_CLIENT = 2;
 
 /**
  * Account status

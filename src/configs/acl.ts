@@ -17,7 +17,7 @@ export type ACLObj = {
  * We have just shown Admin and Client rules for demo purpose where
  * admin can manage everything and client can just visit ACL page
  */
-const defineRulesFor = (role: string, subject: string) => {
+const defineRulesFor = (role: number, subject: string) => {
     const { can, rules } = new AbilityBuilder(createMongoAbility);
 
     if (role === ROLE_SUPER_ADMIN) {
@@ -31,7 +31,7 @@ const defineRulesFor = (role: string, subject: string) => {
     return rules;
 };
 
-export const buildAbilityFor = (role: string, subject: string): AppAbility => {
+export const buildAbilityFor = (role: number, subject: string): AppAbility => {
     return new AppAbility(defineRulesFor(role, subject), {
         detectSubjectType: (object: any) => object!.type
     });

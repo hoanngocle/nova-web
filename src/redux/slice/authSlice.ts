@@ -11,7 +11,7 @@ export type AuthState = {
         avatar: string;
         dob: string;
         address: string;
-        role: string;
+        role: number | null;
         status: string;
         created_at: string;
     };
@@ -22,7 +22,6 @@ export type AuthState = {
 
 export const fetchUserData = createAsyncThunk('users/fetchUserData', async (data, { dispatch, rejectWithValue }) => {
     try {
-        console.log('12312312312');
         const response = await getUserData();
         const { data = {}, success = false } = response.data;
 
@@ -37,13 +36,7 @@ export const fetchUserData = createAsyncThunk('users/fetchUserData', async (data
         console.log(error.request);
         console.log(error.code === 'ERR_NETWORK');
 
-        // if(res.axiosFailsDueToNoInternetConnection){
-        //     alert('no internet connection');
-        //     dispatch({type: RELOAD});
-        // }
         const { status } = error.response || {};
-
-        console.log(status);
 
         if ([401, 404].includes(status)) {
             dispatch(logout());
@@ -64,7 +57,7 @@ export const authSlice = createSlice({
             avatar: '',
             dob: '',
             address: '',
-            role: '',
+            role: null,
             status: '',
             created_at: ''
         },
@@ -82,7 +75,7 @@ export const authSlice = createSlice({
         logout: (state: AuthState) => {
             state.token = '';
             state.user.email = '';
-            state.user.role = '';
+            state.user.role = null;
         },
 
         setProfile: (state: AuthState, action) => {

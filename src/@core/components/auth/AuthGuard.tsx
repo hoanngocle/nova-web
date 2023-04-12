@@ -5,8 +5,7 @@ import { ReactNode, ReactElement, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 // ** Hooks Import
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { fetchUserData, selectAuth } from 'src/redux/slice/authSlice';
+import { useAuth } from 'src/hooks/useAuth';
 
 interface AuthGuardProps {
     children: ReactNode;
@@ -15,32 +14,31 @@ interface AuthGuardProps {
 
 const AuthGuard = (props: AuthGuardProps) => {
     const { children, fallback } = props;
+    const auth = useAuth();
     const router = useRouter();
-    const { token, loading } = useAppSelector(selectAuth);
-    const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        if (!router.isReady) {
-            return;
-        }
-
-        if (token === null || token === '') {
-            if (router.asPath !== '/') {
-                router.replace({
-                    pathname: '/login',
-                    query: { returnUrl: router.asPath }
-                });
-            } else {
-                router.replace('/login');
+    useEffect(
+        () => {
+            if (!router.isReady) {
+                return;
             }
-        }
 
-        if (token) {
-            dispatch(fetchUserData());
-        }
-    }, [dispatch, router, router.route, token]);
+            if (auth.user === null && !window.localStorage.getItem('userData')) {
+                if (router.asPath !== '/') {
+                    router.replace({
+                        pathname: '/login',
+                        query: { returnUrl: router.asPath }
+                    });
+                } else {
+                    router.replace('/login');
+                }
+            }
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [router.route]
+    );
 
-    if (loading || token === null) {
+    if (auth.loading || auth.user === null) {
         return fallback;
     }
 

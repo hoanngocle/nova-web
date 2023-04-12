@@ -28,10 +28,10 @@ import { Toaster } from 'react-hot-toast';
 
 // ** Component Imports
 import UserLayout from 'src/layouts/UserLayout';
-import AclGuard from 'src/@core/components/auth/AclGuard';
+import AclGuard from 'src/layouts/components/auth/UserAclGuard';
 import ThemeComponent from 'src/@core/theme/ThemeComponent';
-import AuthGuard from 'src/@core/components/auth/AuthGuard';
-import GuestGuard from 'src/@core/components/auth/GuestGuard';
+import AuthGuard from 'src/layouts/components/auth/UserAuthGuard';
+import GuestGuard from 'src/layouts/components/auth/UserGuestGuard';
 
 // ** Spinner Import
 import Spinner from 'src/@core/components/spinner';

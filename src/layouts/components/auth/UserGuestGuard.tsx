@@ -5,7 +5,8 @@ import { ReactNode, ReactElement, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 // ** Hooks Import
-import { useAuth } from 'src/hooks/useAuth';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { fetchUserData, selectAuth } from 'src/redux/slice/authSlice';
 
 interface GuestGuardProps {
     children: ReactNode;
@@ -14,21 +15,33 @@ interface GuestGuardProps {
 
 const GuestGuard = (props: GuestGuardProps) => {
     const { children, fallback } = props;
-    const auth = useAuth();
     const router = useRouter();
+    const { token, loading } = useAppSelector(selectAuth);
+    const dispatch = useAppDispatch();
+
+    console.log('Guest Guard');
 
     useEffect(() => {
         if (!router.isReady) {
             return;
         }
 
-        if (window.localStorage.getItem('userData')) {
+        if (token) {
+            dispatch(fetchUserData());
+
             router.replace('/');
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [router.route]);
 
-    if (auth.loading || (!auth.loading && auth.user !== null)) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, token, router.route]);
+
+    // useEffect(() => {
+    //     if (!token) {
+    //         navigate('/login', { state: { from: location }, replace: true });
+    //     }
+    // }, [token, location, navigate]);
+
+    if (loading || (!loading && token == null)) {
         return fallback;
     }
 
