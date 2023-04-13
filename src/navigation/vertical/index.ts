@@ -4,21 +4,47 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types';
 const navigation = (): VerticalNavItemsType => {
     return [
         {
-            title: 'Home',
-            path: '/home',
-            icon: 'tabler:smart-home'
+            icon: 'tabler:smart-home',
+            title: 'Dashboard',
+            path: 'admin'
         },
         {
-            title: 'Second Page',
-            path: '/second-page',
-            icon: 'tabler:mail'
+            icon: 'tabler:book',
+            title: 'Study',
+            path: 'admin/study'
         },
         {
-            path: '/acl',
-            action: 'read',
-            subject: 'acl-page',
-            title: 'Access Control',
-            icon: 'tabler:shield'
+            icon: 'tabler:device-gamepad-2',
+            title: 'Gaming',
+            path: 'admin/game'
+        },
+        {
+            icon: 'tabler:barbell',
+            title: 'Training',
+            path: 'admin/training'
+        },
+        {
+            icon: 'tabler:beach',
+            title: 'Relax',
+            path: 'admin/relax'
+        },
+        {
+            icon: 'tabler:horse-toy',
+            title: "Kid's Zone",
+            path: 'admin/kids'
+        },
+        {
+            sectionTitle: 'Apps & Pages'
+        },
+        {
+            icon: 'tabler:file-code',
+            title: 'My CV',
+            path: 'admin/mycv'
+        },
+        {
+            icon: 'tabler:pacman',
+            title: 'About Me',
+            path: 'admin/aboutme'
         }
     ];
 };
