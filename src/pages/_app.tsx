@@ -121,12 +121,12 @@ const App = (props: ExtendedAppProps) => {
             <PersistGate persistor={persisTor} loading={null}>
                 <CacheProvider value={emotionCache}>
                     <Head>
-                        <title>{`${themeConfig.templateName} - Material Design React Admin Template`}</title>
+                        <title>{`${themeConfig.templateName} - New World Online`}</title>
                         <meta
                             name='description'
-                            content={`${themeConfig.templateName} – Material Design React Admin Dashboard Template – is the most developer friendly & highly customizable Admin Dashboard Template based on MUI v5.`}
+                            content={`${themeConfig.templateName} – New World Online – is the best personal project I do it for myself.`}
                         />
-                        <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
+                        <meta name='keywords' content='Material Design, MUI, New World' />
                         <meta name='viewport' content='initial-scale=1, width=device-width' />
                     </Head>
 

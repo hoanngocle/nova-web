@@ -34,7 +34,7 @@ const navigation = (): VerticalNavItemsType => {
             path: 'admin/kids'
         },
         {
-            sectionTitle: 'Apps & Pages'
+            sectionTitle: 'Apps & My Pages'
         },
         {
             icon: 'tabler:file-code',
