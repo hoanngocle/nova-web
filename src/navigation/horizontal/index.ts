@@ -10,7 +10,20 @@ const navigation = (): HorizontalNavItemsType => [
     {
         icon: 'tabler:book',
         title: 'Study',
-        path: 'admin/study'
+        children: [
+            {
+                title: 'Dashboard',
+                path: 'study/english'
+            },
+            {
+                title: 'Dashboard',
+                path: 'study/japanese'
+            },
+            {
+                title: 'Dashboard',
+                path: 'study/math'
+            }
+        ]
     },
     {
         icon: 'tabler:book',

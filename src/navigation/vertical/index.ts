@@ -11,7 +11,23 @@ const navigation = (): VerticalNavItemsType => {
         {
             icon: 'tabler:book',
             title: 'Study',
-            path: 'admin/study'
+            children: [
+                {
+                    icon: 'tabler:book',
+                    title: 'English',
+                    path: 'study/english'
+                },
+                {
+                    icon: 'tabler:language-hiragana',
+                    title: 'Japanese',
+                    path: 'study/japanese'
+                },
+                {
+                    icon: 'tabler:math-function',
+                    title: 'Math',
+                    path: 'study/math'
+                }
+            ]
         },
         {
             icon: 'tabler:device-gamepad-2',
