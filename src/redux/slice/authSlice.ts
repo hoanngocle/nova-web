@@ -33,12 +33,9 @@ export const fetchUserData = createAsyncThunk('users/fetchUserData', async (data
 
         return rejectWithValue(false);
     } catch (error: any) {
-        console.log(error.request);
-        console.log(error.code === 'ERR_NETWORK');
-
         const { status } = error.response || {};
 
-        if ([401, 404].includes(status)) {
+        if ([401, 404].includes(status) || error.code === 'ERR_NETWORK') {
             dispatch(logout());
         }
 

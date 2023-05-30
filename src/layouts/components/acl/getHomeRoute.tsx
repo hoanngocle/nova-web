@@ -7,7 +7,7 @@ const getHomeRoute = (role: number) => {
     if (role === ROLE_CLIENT) {
         return '';
     } else {
-        return 'admin/';
+        return 'dashboard';
     }
 };
 

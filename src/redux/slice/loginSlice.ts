@@ -21,25 +21,22 @@ export type LoginRequest = {
     password: string;
 };
 
-export const asyncLogin = createAsyncThunk(
-    'admin/login',
-    async (params: LoginRequest, { dispatch, rejectWithValue }) => {
-        try {
-            const response = await login(params);
-            const { success } = response.data;
+export const asyncLogin = createAsyncThunk('login', async (params: LoginRequest, { dispatch, rejectWithValue }) => {
+    try {
+        const response = await login(params);
+        const { success } = response.data;
 
-            if (success) {
-                dispatch(setAuth(response.data));
+        if (success) {
+            dispatch(setAuth(response.data));
 
-                return true;
-            }
-
-            return false;
-        } catch (error: any) {
-            return rejectWithValue(getErrorMessage(error));
+            return true;
         }
+
+        return false;
+    } catch (error: any) {
+        return rejectWithValue(getErrorMessage(error));
     }
-);
+});
 
 export const loginSlice = createSlice({
     name: 'login',

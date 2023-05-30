@@ -6,7 +6,7 @@ const navigation = (): VerticalNavItemsType => {
         {
             icon: 'tabler:smart-home',
             title: 'Dashboard',
-            path: 'admin'
+            path: 'dashboard'
         },
         {
             icon: 'tabler:book',
@@ -31,23 +31,34 @@ const navigation = (): VerticalNavItemsType => {
         },
         {
             icon: 'tabler:device-gamepad-2',
-            title: 'Gaming',
-            path: 'admin/game'
-        },
-        {
-            icon: 'tabler:barbell',
-            title: 'Training',
-            path: 'admin/training'
+            title: 'Entertaiment',
+            children: [
+                {
+                    icon: 'tabler:math-function',
+                    title: 'Home',
+                    path: 'game'
+                },
+                {
+                    icon: 'tabler:book',
+                    title: 'Characters',
+                    path: 'game/characters'
+                },
+                {
+                    icon: 'tabler:language-hiragana',
+                    title: 'Items',
+                    path: 'game/japanese'
+                }
+            ]
         },
         {
             icon: 'tabler:beach',
-            title: 'Relax',
-            path: 'admin/relax'
+            title: 'Relax Zone',
+            path: 'relax'
         },
         {
             icon: 'tabler:horse-toy',
             title: "Kid's Zone",
-            path: 'admin/kids'
+            path: 'kids'
         },
         {
             sectionTitle: 'Apps & My Pages'
@@ -55,12 +66,12 @@ const navigation = (): VerticalNavItemsType => {
         {
             icon: 'tabler:file-code',
             title: 'My CV',
-            path: 'admin/mycv'
+            path: 'mycv'
         },
         {
             icon: 'tabler:pacman',
             title: 'About Me',
-            path: 'admin/aboutme'
+            path: 'aboutme'
         }
     ];
 };
