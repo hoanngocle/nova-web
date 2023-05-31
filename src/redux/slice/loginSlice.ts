@@ -67,7 +67,9 @@ export const loginSlice = createSlice({
                 state.loading = false;
                 state.success = false;
                 state.error = true;
-                state.messages = payload as string | LoginValidate;
+                state.messages = payload as string;
+
+                // state.messages = payload as string | LoginValidate;
             });
     }
 });

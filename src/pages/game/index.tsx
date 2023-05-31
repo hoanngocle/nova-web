@@ -11,7 +11,7 @@ const GamePage = () => {
         <Grid container spacing={6}>
             <Grid item md={12} xs={12}>
                 <Card>
-                    <CardHeader title='Home page' />
+                    <CardHeader title='Homepage' />
                     <CardContent>
                         <Typography sx={{ mb: 4 }}>List all menu game</Typography>
                         <Typography sx={{ color: 'primary.main' }}>

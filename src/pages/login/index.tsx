@@ -1,5 +1,5 @@
 // ** React Imports
-import { MouseEvent, ReactNode, useState } from 'react';
+import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 
 // ** Next Imports
 import Link from 'next/link';
@@ -96,11 +96,12 @@ interface FormData {
     email: string;
     password: string;
 }
-import { loginSelector, LoginValidate, asyncLogin } from 'src/redux/slice/loginSlice';
+import { loginSelector, LoginValidate, asyncLogin, resetLoginState } from 'src/redux/slice/loginSlice';
 
 const LoginPage = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(true);
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const { error, loading, messages, success } = useAppSelector(loginSelector);
 
     // ** Hooks
     const dispatch = useAppDispatch();
@@ -122,6 +123,17 @@ const LoginPage = () => {
 
         dispatch(asyncLogin({ email, password }));
     };
+
+    useEffect(() => {
+        console.log(error, messages);
+
+        if (error) {
+            console.log(error);
+            console.log(messages);
+
+            // dispatch(resetLoginState());
+        }
+    }, [dispatch, error, messages]);
 
     const imageSource = 'auth-v2-login-illustration';
 
