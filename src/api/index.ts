@@ -40,11 +40,12 @@ export const getErrorMessage = (error: AxiosError) => {
     if (status && status === 422) {
         return validateErrors ?? errors ?? message;
     }
+
     if (status && status < 500) {
         return message;
     }
 
     if (isDevMode()) console.error(error);
 
-    return 'Server Error';
+    return 'Internal Server Error';
 };

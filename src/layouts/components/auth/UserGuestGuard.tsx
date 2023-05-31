@@ -19,8 +19,6 @@ const GuestGuard = (props: GuestGuardProps) => {
     const { token, loading } = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
 
-    console.log('Guest Guard');
-
     useEffect(() => {
         if (!router.isReady) {
             return;
@@ -29,17 +27,11 @@ const GuestGuard = (props: GuestGuardProps) => {
         if (token) {
             dispatch(fetchUserData());
 
-            router.replace('/');
+            router.replace('dashboard');
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, token, router.route]);
-
-    // useEffect(() => {
-    //     if (!token) {
-    //         navigate('/login', { state: { from: location }, replace: true });
-    //     }
-    // }, [token, location, navigate]);
 
     if (loading || (!loading && token == null)) {
         return fallback;

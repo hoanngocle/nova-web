@@ -96,7 +96,7 @@ interface FormData {
     email: string;
     password: string;
 }
-import { loginSelector, LoginValidate, asyncLogin, resetLoginState } from 'src/redux/slice/loginSlice';
+import { loginSelector, LoginValidate, asyncLogin } from 'src/redux/slice/loginSlice';
 
 const LoginPage = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(true);
@@ -105,12 +105,7 @@ const LoginPage = () => {
     // ** Hooks
     const dispatch = useAppDispatch();
     const theme = useTheme();
-    const bgColors = useBgColor();
-    const { settings } = useSettings();
     const hidden = useMediaQuery(theme.breakpoints.down('md'));
-
-    // ** Vars
-    const { skin } = settings;
 
     const {
         control,
@@ -128,7 +123,7 @@ const LoginPage = () => {
         dispatch(asyncLogin({ email, password }));
     };
 
-    const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration';
+    const imageSource = 'auth-v2-login-illustration';
 
     return (
         <Box className='content-right' sx={{ backgroundColor: 'background.paper' }}>
@@ -202,17 +197,7 @@ const LoginPage = () => {
                                 Please sign-in to your account and start the adventure
                             </Typography>
                         </Box>
-                        <Alert
-                            icon={false}
-                            sx={{ py: 3, mb: 6, ...bgColors.primaryLight, '& .MuiAlert-message': { p: 0 } }}
-                        >
-                            <Typography variant='body2' sx={{ mb: 2, color: 'primary.main' }}>
-                                Admin: <strong>admin@nova.com</strong> / Pass: <strong>admin</strong>
-                            </Typography>
-                            <Typography variant='body2' sx={{ color: 'primary.main' }}>
-                                Client: <strong>client@nova.com</strong> / Pass: <strong>client</strong>
-                            </Typography>
-                        </Alert>
+
                         <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
                             <FormControl fullWidth sx={{ mb: 4 }}>
                                 <Controller
@@ -236,7 +221,7 @@ const LoginPage = () => {
                                 )}
                             </FormControl>
                             <FormControl fullWidth sx={{ mb: 1.5 }}>
-                                <InputLabel htmlFor='auth-login-v2-password' error={Boolean(errors.password)}>
+                                <InputLabel htmlFor='password' error={Boolean(errors.password)}>
                                     Password
                                 </InputLabel>
                                 <Controller
@@ -249,7 +234,7 @@ const LoginPage = () => {
                                             onBlur={onBlur}
                                             label='Password'
                                             onChange={onChange}
-                                            id='auth-login-v2-password'
+                                            id='password'
                                             error={Boolean(errors.password)}
                                             type={showPassword ? 'text' : 'password'}
                                             endAdornment={

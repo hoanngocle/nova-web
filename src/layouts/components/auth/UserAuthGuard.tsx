@@ -19,28 +19,32 @@ const AuthGuard = (props: AuthGuardProps) => {
     const { token, loading } = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        if (!router.isReady) {
-            return;
-        }
-
-        if (token === null || token === '') {
-            if (router.asPath !== '/') {
-                router.replace({
-                    pathname: '/login',
-                    query: { returnUrl: router.asPath }
-                });
-            } else {
-                router.replace('/login');
+    useEffect(
+        () => {
+            if (!router.isReady) {
+                return;
             }
-        }
 
-        if (token) {
-            dispatch(fetchUserData());
-        }
-    }, [dispatch, router, router.route, token]);
+            if (token === null || token === '') {
+                if (router.asPath !== '/') {
+                    router.replace({
+                        pathname: '/login',
+                        query: { returnUrl: router.asPath }
+                    });
+                } else {
+                    router.replace('/login');
+                }
+            }
 
-    if (loading || token === null) {
+            if (token) {
+                dispatch(fetchUserData());
+            }
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [router.route]
+    );
+
+    if (loading || token === null || token === '') {
         return fallback;
     }
 

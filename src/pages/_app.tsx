@@ -27,9 +27,9 @@ import themeConfig from 'src/configs/themeConfig';
 import { Toaster } from 'react-hot-toast';
 
 // ** Component Imports
+import ThemeComponent from 'src/@core/theme/ThemeComponent';
 import UserLayout from 'src/layouts/UserLayout';
 import AclGuard from 'src/layouts/components/auth/UserAclGuard';
-import ThemeComponent from 'src/@core/theme/ThemeComponent';
 import AuthGuard from 'src/layouts/components/auth/UserAuthGuard';
 import GuestGuard from 'src/layouts/components/auth/UserGuestGuard';
 

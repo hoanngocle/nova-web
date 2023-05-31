@@ -39,6 +39,11 @@ const navigation = (): VerticalNavItemsType => {
                     path: 'game'
                 },
                 {
+                    icon: 'tabler:home-heart',
+                    title: 'Items',
+                    path: 'game/main'
+                },
+                {
                     icon: 'tabler:book',
                     title: 'Characters',
                     path: 'game/characters'
@@ -46,14 +51,9 @@ const navigation = (): VerticalNavItemsType => {
                 {
                     icon: 'tabler:language-hiragana',
                     title: 'Items',
-                    path: 'game/japanese'
+                    path: 'game/items'
                 }
             ]
-        },
-        {
-            icon: 'tabler:beach',
-            title: 'Relax Zone',
-            path: 'relax'
         },
         {
             icon: 'tabler:horse-toy',
@@ -61,17 +61,17 @@ const navigation = (): VerticalNavItemsType => {
             path: 'kids'
         },
         {
-            sectionTitle: 'Apps & My Pages'
-        },
-        {
-            icon: 'tabler:file-code',
-            title: 'My CV',
-            path: 'mycv'
+            sectionTitle: 'My Pages'
         },
         {
             icon: 'tabler:pacman',
             title: 'About Me',
             path: 'aboutme'
+        },
+        {
+            icon: 'tabler:pacman',
+            title: 'Setting',
+            path: 'setting'
         }
     ];
 };
