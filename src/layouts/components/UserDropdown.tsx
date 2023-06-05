@@ -23,6 +23,7 @@ import { useAppDispatch } from 'src/redux/hooks';
 // ** Type Imports
 import { Settings } from 'src/@core/context/settingsContext';
 import { logout } from 'src/redux/slice/authSlice';
+import { PROFILE_URL } from 'src/configs/urls';
 
 interface Props {
     settings: Settings;
@@ -137,7 +138,7 @@ const UserDropdown = (props: Props) => {
                     </Box>
                 </Box>
                 <Divider sx={{ my: theme => `${theme.spacing(2)} !important` }} />
-                <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+                <MenuItemStyled sx={{ p: 0 }} onClick={() => handleDropdownClose(PROFILE_URL)}>
                     <Box sx={styles}>
                         <Icon icon='tabler:user-check' />
                         My Profile

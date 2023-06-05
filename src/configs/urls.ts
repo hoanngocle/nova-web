@@ -1,3 +1,4 @@
 export const DEFAULT_URL = '/';
 
-export const LOGIN = 'login';
+export const LOGIN_URL = 'login';
+export const PROFILE_URL = 'profile';

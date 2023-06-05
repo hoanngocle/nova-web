@@ -111,6 +111,7 @@ const LoginPage = () => {
     const {
         control,
         handleSubmit,
+        setError,
         formState: { errors }
     } = useForm({
         defaultValues,
@@ -125,15 +126,19 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        console.log(error, messages);
-
         if (error) {
-            console.log(error);
-            console.log(messages);
+            setError('email', {
+                type: 'required'
+            });
 
-            // dispatch(resetLoginState());
+            setError('password', {
+                type: 'manual',
+                message: 'Incorrect email or password.'
+            });
+
+            dispatch(resetLoginState());
         }
-    }, [dispatch, error, messages]);
+    }, [dispatch, error, setError]);
 
     const imageSource = 'auth-v2-login-illustration';
 
