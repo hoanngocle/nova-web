@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 // ** Hooks Import
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { fetchUserData, selectAuth } from 'src/redux/slice/authSlice';
-import { DEFAULT_URL, LOGIN } from 'src/configs/urls';
+import { DEFAULT_URL, LOGIN_URL } from 'src/configs/urls';
 
 interface AuthGuardProps {
     children: ReactNode;
@@ -29,11 +29,11 @@ const AuthGuard = (props: AuthGuardProps) => {
             if (token === null || token === '') {
                 if (router.asPath !== DEFAULT_URL) {
                     router.replace({
-                        pathname: LOGIN,
+                        pathname: LOGIN_URL,
                         query: { returnUrl: router.asPath }
                     });
                 } else {
-                    router.replace(LOGIN);
+                    router.replace(LOGIN_URL);
                 }
             }
 
